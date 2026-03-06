@@ -1,9 +1,8 @@
-from Blackbox import riscv_reg_access
+from riscv_reg_block import reg_access
 
-import pytest
 import random
 
-all_addr = list(range(0x0000, 0x10000))
+all_addr = list(range(0x0000, 0x0100))
 print(f"Amount = {len(all_addr)}")
 
 results = {}
@@ -21,15 +20,15 @@ def test_all_registers(test_addr : list):
     failed = 0
 
     for addr in test_addr:
-        test_input = 0xA5A5A5A5
+        test_input = 0xA5A5
         try:
-            writing = riscv_reg_access(addr, test_input, 'write')
+            writing = reg_access(addr, test_input, 'write')
             if not writing['ack']: # Err 1: ack = false in write
                 results[addr] = 1
                 failed += 1
                 continue
             
-            reading = riscv_reg_access(addr, 0, 'read')
+            reading = reg_access(addr, 0, 'read')
             if not reading['ack']: # Err 2: ack = false in read
                 results[addr] = 2
                 failed += 1
@@ -39,7 +38,7 @@ def test_all_registers(test_addr : list):
                 results[addr] = 3
                 failed += 1
             else:
-                results[addr] += 0
+                results[addr] = 0
                 passed += 1
         except Exception as e: # Err 4: Just died
             results[addr] = 4
@@ -49,4 +48,5 @@ def test_all_registers(test_addr : list):
     print(f"Checked: {len(test_addr)}")      
     print(f"Passed: {passed}")
     print(f"Failed: {failed}")
- 
+
+test_all_registers(all_addr)  
