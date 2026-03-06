@@ -5,6 +5,7 @@ pytest-cov
 networkx
 
 # GUI
+plotly
 streamlit
 
 # Lint
