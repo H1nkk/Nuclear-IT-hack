@@ -2,14 +2,14 @@ import numpy as np
 
 # Runs verification on the Registry block
 # Return entries:
-#   "Results" : list[list[RegistryTestStatus : int]]
+#   "Results" : list[RegistryTestStatus : int]]
 def run_tests() -> dict:
     
     # Test logic
     
     # PLACE HOLDER
     results : dict = {}
-    results["Results"] = np.random.randint(0, 4, size=(255, 255)).tolist()
+    results["Results"] = np.random.randint(0, 4, size=(10)).tolist()
     
     return results
 
