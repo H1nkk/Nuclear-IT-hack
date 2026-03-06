@@ -1,4 +1,4 @@
-from Blackbox import riscv_reg_access
+from riscv_reg_block import riscv_reg_access
 
 import random
 
