@@ -1,0 +1,105 @@
+[tool.pylint.main]
+# Return non-zero exit code if any of these messages/categories are detected,
+# even if score is above --fail-under value.
+# fail-on =
+
+# Specify a score threshold under which the program will exit with error.
+fail-under = 0
+
+# Files or directories to be skipped. They should be base names, not paths.
+ignore = ["CVS", ".venv", "venv", "__pycache__"]
+
+# Add files or directories matching the regular expressions patterns to the
+# ignore-list.
+# ignore-paths =
+
+# Files or directories matching the regular expression patterns are skipped.
+ignore-patterns = ["^\\.#", ".*\\.pyc$"]
+
+# Use multiple processes to speed up Pylint.
+jobs = 1
+
+# Minimum Python version to use for version dependent checks.
+py-version = "3.14"
+
+[tool.pylint.basic]
+# НАСТРАИВАЕМ ПРОВЕРКУ ИМЕН МОДУЛЕЙ (ФАЙЛОВ) НА PASCALCASE
+module-naming-style = "PascalCase"
+
+# Дополнительно: разрешаем разные стили для констант и переменных,
+# чтобы не было ложных срабатываний
+const-naming-style = "any"
+variable-naming-style = "any"
+function-naming-style = "any"
+method-naming-style = "any"
+class-naming-style = "any"
+attr-naming-style = "any"
+argument-naming-style = "any"
+
+# Good variable names which should always be accepted
+good-names = ["i", "j", "k", "ex", "Run", "_", "addr", "data", "rw", "bus_width"]
+
+[tool.pylint."messages control"]
+# ОТКЛЮЧАЕМ ПРАКТИЧЕСКИ ВСЕ ПРОВЕРКИ, КРОМЕ ТЕХ, ЧТО НАМ НУЖНЫ
+disable = [
+    # Отключаем все проверки по умолчанию
+    "all",
+    
+    # Включаем только проверку имен модулей (файлов)
+    # C0103 - invalid-name (именно эта проверка отвечает за имена модулей)
+]
+
+# Включаем только конкретные проверки, которые нам нужны
+enable = [
+    "invalid-name",  # C0103 - проверка имен (включая имена модулей)
+]
+
+[tool.pylint.format]
+# Форматирование нас не интересует, но оставим базовые настройки
+max-line-length = 100
+indent-string = "    "
+
+[tool.pylint.reports]
+# Python expression for score calculation
+evaluation = "10.0 - ((float(5 * error + warning + refactor + convention) / statement) * 10)"
+
+# Don't show full reports, only messages
+reports = false
+
+# Show score
+score = true
+
+[tool.pylint.design]
+# Отключаем проверки на количество аргументов, методов и т.д.
+# (они все равно отключены через disable=all, но оставим для ясности)
+max-args = 100
+max-attributes = 100
+max-locals = 100
+max-returns = 100
+max-statements = 1000
+max-parents = 100
+max-public-methods = 1000
+min-public-methods = 0
+
+[tool.pylint.variables]
+# Разрешаем неиспользуемые переменные и аргументы
+dummy-variables-rgx = ".*"
+ignored-argument-names = ".*"
+allow-global-unused-variables = true
+
+[tool.pylint.classes]
+# Игнорируем проверки классов
+defining-attr-methods = ["__init__", "__new__", "setUp", "asyncSetUp", "__post_init__"]
+valid-classmethod-first-arg = ["cls"]
+valid-metaclass-classmethod-first-arg = ["mcs"]
+
+[tool.pylint.imports]
+known-third-party = ["enchant"]
+
+[tool.pylint.exceptions]
+overgeneral-exceptions = ["builtins.BaseException", "builtins.Exception"]
+
+[tool.pylint.typecheck]
+ignore-on-opaque-inference = true
+ignored-classes = ["optparse.Values", "thread._local", "_thread._local", "argparse.Namespace"]
+missing-member-hint = false
