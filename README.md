@@ -16,3 +16,5 @@ Possible results:
 * 2 - Error when reading data
 * 3 - Input not equal to output
 * 4 - Unknown exception
+
+![](Megumin.png)
