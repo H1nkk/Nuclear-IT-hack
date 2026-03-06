@@ -6,3 +6,6 @@ networkx
 
 # GUI
 streamlit
+
+# Lint
+pylint
