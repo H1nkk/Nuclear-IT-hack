@@ -1,6 +1,5 @@
 from Blackbox import riscv_reg_access
 
-import pytest
 import random
 
 all_addr = list(range(0x0000, 0x10000))
