@@ -30,28 +30,20 @@ fig = px.imshow(
         [0.0, "#03FF81"],
         [0.1, "#03FF81"],
         [0.2, "#FF0000"],
-        [1.0, "#FF0000"]
+        [1.0, "#FF0000"],
     ],
     aspect="auto",
-    title="Test results", 
+    title="Test results",
 )
 
-fig.update_traces(
-    text=names_data,
-    texttemplate="%{text}",
-    textfont={"size": 14}
-)
+fig.update_traces(text=names_data, texttemplate="%{text}", textfont={"size": 14})
 
 # Hide the colorbar
 fig.update_coloraxes(showscale=False)
 
-fig.update_xaxes(tickmode="array",
-                 tickvals=[],
-                 ticktext=[])
+fig.update_xaxes(tickmode="array", tickvals=[], ticktext=[])
 
-fig.update_yaxes(tickmode="array",
-                 tickvals=[],
-                 ticktext=[])
+fig.update_yaxes(tickmode="array", tickvals=[], ticktext=[])
 
 # Displaying using streamlit
 st.plotly_chart(fig)
@@ -64,17 +56,19 @@ error_names = {0: "None", 1: "Bug 1", 2: "Bug 2", 3: "Bug 3", 4: "Unknown Error"
 data_frame_data = pd.DataFrame(
     {
         "Register IDs": results.keys(),
-        "Status" : [status_names[results[i]] for i in results],
-        "Error Type": [error_names[results[i]] for i in results]
+        "Status": [status_names[results[i]] for i in results],
+        "Error Type": [error_names[results[i]] for i in results],
     }
 )
 
+
 def color_row(row):
     if row["Status"] == "Ok":
-        return [""] * len(row) 
+        return [""] * len(row)
     elif row["Status"] == "Error":
         return ["background-color: #FF0000"] * len(row)
     return [""] * len(row)
+
 
 styled_df = data_frame_data.style.apply(color_row, axis=1)
 
