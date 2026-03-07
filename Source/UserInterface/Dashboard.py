@@ -5,7 +5,7 @@ from numpy.random import default_rng as rng
 import plotly.express as px
 import numpy as np
 
-from Main import Main
+import Source.Main as Main
 
 # Running main
 results: dict = Main.run_tests()["Results"]
