@@ -8,14 +8,17 @@ import numpy as np
 import Source.Main as Main
 
 # Running main
-results : dict = Main.run_tests()["Results"]
+results: dict = Main.run_tests()["Results"]
 
+names_data = [[]]
 z_data = [[]]
 for i in range(len(results)):
     if len(z_data[-1]) < 4:
         z_data[-1].append(results[i])
+        names_data[-1].append(i)
     else:
         z_data.append([results[i]])
+        names_data.append([i])
 
 while len(z_data[-1]) < 4:
     z_data[-1].append(-1)
@@ -23,7 +26,6 @@ while len(z_data[-1]) < 4:
 # Create the heatmap
 fig = px.imshow(
     z_data,
-    text_auto=True,
     color_continuous_scale=[
         [0.0, "#03FF81"],
         [0.1, "#03FF81"],
@@ -34,41 +36,44 @@ fig = px.imshow(
     title="Test results",
 )
 
+fig.update_traces(text=names_data, texttemplate="%{text}", textfont={"size": 14})
+
+# Hide the colorbar
+fig.update_coloraxes(showscale=False)
+
+fig.update_xaxes(tickmode="array", tickvals=[], ticktext=[])
+
+fig.update_yaxes(tickmode="array", tickvals=[], ticktext=[])
+
 # Displaying using streamlit
 st.plotly_chart(fig)
 
 # Data frame
-status_names = {
-    0 : "Ok",
-    1 : "Error",
-    2 : "Error",
-    3 : "Error",
-    4 : "Error"
-}
+status_names = {0: "Ok", 1: "Error", 2: "Error", 3: "Error", 4: "Error"}
 
-error_names = {
-    0 : "None",
-    1 : "Bug 1",
-    2 : "Bug 2",
-    3 : "Bug 3",
-    4 : "Unknown Error"
-}
+error_names = {0: "None", 1: "Bug 1", 2: "Bug 2", 3: "Bug 3", 4: "Unknown Error"}
 
 data_frame_data = pd.DataFrame(
     {
-        "Register IDs": range(16),
-        "Status" : [status_names[results[i]] for i in results],
-        "Error Type": [error_names[results[i]] for i in results]
+        "Register IDs": results.keys(),
+        "Status": [status_names[results[i]] for i in results],
+        "Error Type": [error_names[results[i]] for i in results],
     }
 )
 
+
+def color_row(row):
+    if row["Status"] == "Ok":
+        return [""] * len(row)
+    elif row["Status"] == "Error":
+        return ["background-color: #FF0000"] * len(row)
+    return [""] * len(row)
+
+
+styled_df = data_frame_data.style.apply(color_row, axis=1)
+
 st.dataframe(
-    data_frame_data,
-    column_config={
-        "Register IDs": "Register IDs",
-        "Status": "Status",
-        "Error Type": "Error Type"
-    },
+    styled_df,
     hide_index=True,
 )
 
