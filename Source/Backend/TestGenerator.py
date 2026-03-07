@@ -32,7 +32,7 @@ def test_all_registers(test_addr : list) -> list:
                 results[addr] = 2
                 failed += 1
                 continue
-        
+
             if (test_input != reading['reg_value']): # Err 3: Write != Read
                 results[addr] = 3
                 failed += 1
@@ -61,6 +61,16 @@ def test_all_registers(test_addr : list) -> list:
    
     return results
 
+def fourth_register_test(test_addr : list):
+    for addr in test_addr:
+        if addr == 0x0004:
+            continue
+        test_input = random.randint(0, 0xFFFF)
+        writing = reg_access(addr, test_input, 'write')            
+        reading = reg_access(0x0004, 0, 'read')
+        if not reading['ack']:
+            print(f"After addressing {addr}, fourth register is broken")
 
-test_all_registers(all_addr)  
 
+# test_all_registers(all_addr)  
+fourth_register_test(all_addr)
