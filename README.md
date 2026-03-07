@@ -28,3 +28,4 @@ Possible results:
 
 * Reading from 4th register will not work after writing into 3rd register
 * If last two digits in 2nd register are 42 (in hex form), then other digits are nullified 
+* 32-bit integer overflow is not processed properly
