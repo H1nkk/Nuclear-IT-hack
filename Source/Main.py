@@ -1,7 +1,8 @@
 import numpy as np
 import random
 
-from Source.Backend.TestGenerator import test_all_registers
+# from Source.Backend.TestGenerator import test_all_registers
+from Source.Backend.CoverageAnalysis import run_registry_tests
 
 
 # Runs verification on the Registry block
@@ -15,8 +16,8 @@ def run_tests() -> dict:
     results: dict = {}
 
     all_addr = list(range(0x0000, 0x0010))
-    random.shuffle(all_addr)
-    results["Results"] = test_all_registers(all_addr)
+    # random.shuffle(all_addr)
+    results["Results"] = run_registry_tests(all_addr)
 
     return results
 
