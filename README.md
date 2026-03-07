@@ -23,3 +23,8 @@ Possible results:
 * 2 - Error when reading data
 * 3 - Input not equal to output
 * 4 - Unknown exception
+
+### Bugs found
+
+* Reading from 4th register will not work after writing into 3rd register
+* If last two digits in 2nd register are 42 (in hex form), then other digits are nullified 
