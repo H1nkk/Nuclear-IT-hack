@@ -5,10 +5,10 @@ from numpy.random import default_rng as rng
 import plotly.express as px
 import numpy as np
 
-import Source.Main as Main
+from Main import Main
 
 # Running main
-results : dict = Main.run_tests()["Results"]
+results: dict = Main.run_tests()["Results"]
 
 z_data = [[]]
 for i in range(len(results)):
@@ -38,27 +38,15 @@ fig = px.imshow(
 st.plotly_chart(fig)
 
 # Data frame
-status_names = {
-    0 : "Ok",
-    1 : "Error",
-    2 : "Error",
-    3 : "Error",
-    4 : "Error"
-}
+status_names = {0: "Ok", 1: "Error", 2: "Error", 3: "Error", 4: "Error"}
 
-error_names = {
-    0 : "None",
-    1 : "Bug 1",
-    2 : "Bug 2",
-    3 : "Bug 3",
-    4 : "Unknown Error"
-}
+error_names = {0: "None", 1: "Bug 1", 2: "Bug 2", 3: "Bug 3", 4: "Unknown Error"}
 
 data_frame_data = pd.DataFrame(
     {
         "Register IDs": range(16),
-        "Status" : [status_names[results[i]] for i in results],
-        "Error Type": [error_names[results[i]] for i in results]
+        "Status": [status_names[results[i]] for i in results],
+        "Error Type": [error_names[results[i]] for i in results],
     }
 )
 
@@ -67,7 +55,7 @@ st.dataframe(
     column_config={
         "Register IDs": "Register IDs",
         "Status": "Status",
-        "Error Type": "Error Type"
+        "Error Type": "Error Type",
     },
     hide_index=True,
 )
