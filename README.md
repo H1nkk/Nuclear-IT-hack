@@ -8,6 +8,13 @@
 * Create a python Virtual Environment;
 * Run "pip install -r ./Source/requirements.txt";
 
+### Running
+
+*Run from ".../Nuclear-IT-hack/"*
+```bash
+streamlit run .\Source\UserInterface\Dashboard.py
+```
+
 ### Test Generation
 
 Possible results:
