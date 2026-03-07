@@ -1,4 +1,7 @@
 import numpy as np
+import random
+
+from Source.Backend.TestGenerator import test_all_registers
 
 # Runs verification on the Registry block
 # Return entries:
@@ -9,7 +12,10 @@ def run_tests() -> dict:
     
     # PLACE HOLDER
     results : dict = {}
-    results["Results"] = np.random.randint(0, 4, size=(10)).tolist()
+    
+    all_addr = list(range(0x0000, 0x0010))
+    random.shuffle(all_addr)
+    results["Results"] = test_all_registers(all_addr)
     
     return results
 
