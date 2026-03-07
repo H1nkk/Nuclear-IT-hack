@@ -1,7 +1,5 @@
 # Nuclear IT Hack - YADRO Case
 
-### Info
-
 ### Installation
 *Built for python 3.14*
 
@@ -14,15 +12,10 @@
 ```bash
 streamlit run .\Source\UserInterface\Dashboard.py
 ```
-
-### Test Generation
-
-Possible results:
-* 0 - Test passed
-* 1 - Error when writing data
-* 2 - Error when reading data
-* 3 - Input not equal to output
-* 4 - Unknown exception
+Launch pytests
+```bash
+pytest .\Source\Tests\GeneratedTests.py
+```
 
 ### Bugs found
 
