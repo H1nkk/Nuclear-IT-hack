@@ -8,20 +8,23 @@ import numpy as np
 import Source.Main as Main
 
 # Running main
-results: dict = Main.run_tests()["Results"]
+results: dict[list] = Main.run_tests()["Results"]
 
 names_data = [[]]
 z_data = [[]]
 for i in range(len(results)):
     if len(z_data[-1]) < 4:
-        z_data[-1].append(results[i])
+        z_data[-1].append(1 if len(results[i]) > 0 else 0)
         names_data[-1].append(i)
     else:
-        z_data.append([results[i]])
+        z_data.append([1 if len(results[i]) > 0 else 0])
         names_data.append([i])
 
 while len(z_data[-1]) < 4:
     z_data[-1].append(-1)
+
+# Test
+st.text("Registry Block Verification")
 
 # Create the heatmap
 fig = px.imshow(
@@ -33,7 +36,7 @@ fig = px.imshow(
         [1.0, "#FF0000"],
     ],
     aspect="auto",
-    title="Test results",
+    title="",
 )
 
 fig.update_traces(text=names_data, texttemplate="%{text}", textfont={"size": 14})
@@ -48,16 +51,59 @@ fig.update_yaxes(tickmode="array", tickvals=[], ticktext=[])
 # Displaying using streamlit
 st.plotly_chart(fig)
 
-# Data frame
-status_names = {0: "Ok", 1: "Error", 2: "Error", 3: "Error", 4: "Error"}
 
-error_names = {0: "None", 1: "Bug 1", 2: "Bug 2", 3: "Bug 3", 4: "Unknown Error"}
+# "Overflow!" heatmap
+
+st.text("Overflow")
+
+names_data = [[]]
+z_data = [[]]
+for i in range(len(results)):
+    if len(z_data[-1]) < 4:
+        z_data[-1].append(1 if ("Overflow!" in results[i]) else 0)
+        names_data[-1].append(i)
+    else:
+        z_data.append([1 if ("Overflow!" in results[i]) else 0])
+        names_data.append([i])
+
+while len(z_data[-1]) < 4:
+    z_data[-1].append(-1)
+
+
+# Create the heatmap
+fig = px.imshow(
+    z_data,
+    color_continuous_scale=[
+        [0.0, "#03FF81"],
+        [0.1, "#03FF81"],
+        [0.2, "#FF0000"],
+        [1.0, "#FF0000"],
+    ],
+    aspect="auto",
+    title="",
+)
+
+fig.update_traces(text=names_data, texttemplate="%{text}", textfont={"size": 14})
+
+# Hide the colorbar
+fig.update_coloraxes(showscale=False)
+
+fig.update_xaxes(tickmode="array", tickvals=[], ticktext=[])
+
+fig.update_yaxes(tickmode="array", tickvals=[], ticktext=[])
+
+# Displaying using streamlit
+st.plotly_chart(fig, key="heatmap_chart")
+
+
+# Data frame
+separator = ", "
 
 data_frame_data = pd.DataFrame(
     {
         "Register IDs": results.keys(),
-        "Status": [status_names[results[i]] for i in results],
-        "Error Type": [error_names[results[i]] for i in results],
+        "Status": ["Ok" if (len(results[i]) == 0) else "Error" for i in results],
+        "Error Types": [separator.join(set(results[i])) for i in results],
     }
 )
 

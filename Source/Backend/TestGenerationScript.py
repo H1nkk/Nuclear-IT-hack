@@ -23,9 +23,9 @@ def test_write_read_all_values_register_{addr}(): \n\
             assert False \n\
     assert True\n\n\n\
 ")
-        
+
         f.write("# Overflow Test \n\n")
-        
+
         for addr in test_addr:
             f.write(f"\
 def test_overflow_register_{addr}(): \n\
