@@ -5,10 +5,10 @@ from numpy.random import default_rng as rng
 import plotly.express as px
 import numpy as np
 
-import Source.Main as Main
+from Main import Main
 
 # Running main
-results : dict = Main.run_tests()["Results"]
+results: dict = Main.run_tests()["Results"]
 
 names_data = [[]]
 z_data = [[]]
@@ -57,21 +57,9 @@ fig.update_yaxes(tickmode="array",
 st.plotly_chart(fig)
 
 # Data frame
-status_names = {
-    0 : "Ok",
-    1 : "Error",
-    2 : "Error",
-    3 : "Error",
-    4 : "Error"
-}
+status_names = {0: "Ok", 1: "Error", 2: "Error", 3: "Error", 4: "Error"}
 
-error_names = {
-    0 : "None",
-    1 : "Bug 1",
-    2 : "Bug 2",
-    3 : "Bug 3",
-    4 : "Unknown Error"
-}
+error_names = {0: "None", 1: "Bug 1", 2: "Bug 2", 3: "Bug 3", 4: "Unknown Error"}
 
 data_frame_data = pd.DataFrame(
     {

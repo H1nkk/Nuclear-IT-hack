@@ -22,4 +22,4 @@ jobs:
         pip install -r Source/requirements.txt 
     - name: Analysing the code with pylint
       run: |
-        pylint --rcfile=pyproject.toml $(git ls-files '*.py')
+        pylint --rcfile=pylintrc $(git ls-files '*.py')
